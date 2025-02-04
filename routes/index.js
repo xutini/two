@@ -41,16 +41,16 @@ const digitSum = (num) => {
 
 router.get("/api/classify-number", async (req, res) => {
   const { number } = req.query;
-
+  
+  const num = parseInt(number);
   // Check if the number is a valid integer
-  if (isNaN(number) || number === "") {
+  if (isNaN(number) || number === "" || number < 0) {
     return res.status(400).json({
       number: number,
       error: true,
     });
   }
 
-  const num = parseInt(number);
 
   // Get the properties of the number
   const prime = isPrime(num);
