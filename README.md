@@ -13,7 +13,7 @@ This API takes a number as input and returns interesting mathematical properties
 
 ## API Endpoint  
 
-### **GET https://classify-num.onrender.com/api/classify-number**  
+  
 #### **Request Parameters:**  
 - `number` (integer, required): The number to classify  
 
