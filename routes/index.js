@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
+const axios = require('axios');
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -38,7 +39,7 @@ const digitSum = (num) => {
 };
 
 
-router.get("/api/classify-number", (req, res) => {
+router.get("/api/classify-number", async (req, res) => {
   const { number } = req.query;
 
   // Check if the number is a valid integer
@@ -60,15 +61,22 @@ router.get("/api/classify-number", (req, res) => {
   if (num % 2 !== 0) properties.push("odd");
   if (num % 2 === 0) properties.push("even");
 
-  // Prepare the fun fact
-  let funFact = "";
-  if (armstrong) {
-    funFact = `${num} is an Armstrong number because ${num
-      .toString()
-      .split("")
-      .map((digit) => `${digit}^${num.toString().length}`)
-      .join(" + ")} = ${num}`;
+ 
+  let funFact = '';
+  try {
+      const response = await axios.get(`http://numbersapi.com/${Math.floor(num)}/math`); // Get a fun fact about the number
+      funFact = response.data; // Save the response as the fun fact
+  } catch (error) {
+      funFact = `${num} is a number`; // If something goes wrong, just say it's a number
   }
+
+  // if (armstrong) {
+  //   funFact = `${num} is an Armstrong number because ${num
+  //     .toString()
+  //     .split("")
+  //     .map((digit) => `${digit}^${num.toString().length}`)
+  //     .join(" + ")} = ${num}`;
+  // }
 
   // Send the JSON response
   return res.status(200).json({
@@ -77,7 +85,7 @@ router.get("/api/classify-number", (req, res) => {
     is_perfect: perfect,
     properties: properties,
     digit_sum: digitSum(num),
-    fun_fact: funFact || "No fun fact available",
+    fun_fact: funFact ,
   });
 });
 
