@@ -46,7 +46,7 @@ router.get("/api/classify-number", async (req, res) => {
   // Check if the number is a valid integer
   if (isNaN(number) || number === "" || number < 0) {
     return res.status(400).json({
-      number: number,
+      number: number || null,
       error: true,
     });
   }
@@ -70,13 +70,13 @@ router.get("/api/classify-number", async (req, res) => {
       funFact = `${num} is a number`; // If something goes wrong, just say it's a number
   }
 
-  if (armstrong) {
-    funFact = `${num} is an Armstrong number because ${num
-      .toString()
-      .split("")
-      .map((digit) => `${digit}^${num.toString().length}`)
-      .join(" + ")} = ${num}`;
-  }
+  // if (armstrong) {
+  //   funFact = `${num} is an Armstrong number because ${num
+  //     .toString()
+  //     .split("")
+  //     .map((digit) => `${digit}^${num.toString().length}`)
+  //     .join(" + ")} = ${num}`;
+  // }
 
   // Send the JSON response
   return res.status(200).json({
