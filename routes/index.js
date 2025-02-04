@@ -70,13 +70,13 @@ router.get("/api/classify-number", async (req, res) => {
       funFact = `${num} is a number`; // If something goes wrong, just say it's a number
   }
 
-  // if (armstrong) {
-  //   funFact = `${num} is an Armstrong number because ${num
-  //     .toString()
-  //     .split("")
-  //     .map((digit) => `${digit}^${num.toString().length}`)
-  //     .join(" + ")} = ${num}`;
-  // }
+  if (armstrong) {
+    funFact = `${num} is an Armstrong number because ${num
+      .toString()
+      .split("")
+      .map((digit) => `${digit}^${num.toString().length}`)
+      .join(" + ")} = ${num}`;
+  }
 
   // Send the JSON response
   return res.status(200).json({
